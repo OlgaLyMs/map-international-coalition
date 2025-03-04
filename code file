@@ -1,0 +1,48 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw, ImageFont
+
+# Define the path to your map image
+image_path = "map.jpg"
+
+# Load the image using PIL
+image = Image.open(image_path)
+draw = ImageDraw.Draw(image)
+
+# Define the highlight color (pink)
+highlight_color = (255, 182, 193)
+text_color = (0, 0, 0)  # Black text for labels
+
+# Approximate locations of specified countries on the map
+country_positions = {
+    "France": (990, 425),
+    "Denmark": (1020, 360),
+    "Norway": (640, 150),
+    "Chile": (550, 940),
+    "Mexico": (380, 580),
+    "Senegal": (520, 350),
+    "Bulgaria": (660, 270),
+    "Togo": (540, 370),
+    "Iceland": (580, 130),
+    "Costa Rica": (480, 640),
+    "Luxembourg": (610, 245),
+}
+
+# Load a font (default system font if not found)
+try:
+    font = ImageFont.truetype("arial.ttf", 50)
+except IOError:
+    font = ImageFont.load_default()
+
+# Draw circles and add country names
+for country, (x, y) in country_positions.items():
+    draw.ellipse((x-10, y-10, x+10, y+10), fill=highlight_color)
+    draw.text((x + 12, y - 8), country, fill=text_color, font=font)
+
+# Display the updated image
+plt.figure(figsize=(10, 6))
+plt.imshow(image)
+plt.axis("off")
+plt.show()
+
+  
